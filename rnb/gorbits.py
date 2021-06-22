@@ -19,11 +19,11 @@ vertices 1 .. n, and the images of the relevant arrows ij.
     - make classes for cuts words, path words, substitution words,
       that can eat strings
 """
+from sage.all import FiniteWords
 from collections import namedtuple
 from itertools import chain
 from sage.geometry.polyhedron.constructor import Polyhedron
-
-load('hecke_orbits.sage')
+from rnb.hecke_orbits import *
 
 SegmentSequence = namedtuple("SegmentSequence", 'segments rotation_order cutting_word')
 
@@ -58,6 +58,7 @@ def substitution_words(g):
 
     EXAMPLES::
 
+        sage: from rnb.gorbits import substitution_words
         sage: g = 2
         sage: substitution_words(g)
         Finite words on [0 .. 3]
@@ -76,6 +77,7 @@ def cutting_words(g):
 
     EXAMPLES::
 
+        sage: from rnb.gorbits import cutting_words
         sage: g = 2
         sage: C = cutting_words(g)
         sage: C
@@ -100,6 +102,7 @@ def path_words(g):
     EXAMPLES::
 
         sage: g = 1
+        sage: from rnb.gorbits import path_words
         sage: P = path_words(g)
         sage: P
         Path words on [1 .. 3]
@@ -139,7 +142,8 @@ def fix_cutting_dictionary(p, g=None):
     EXAMPLE::
 
         sage: p = {'', '12'}
-        sage: fix_path_dictionary(p, g=2)
+        sage: from rnb.gorbits import fix_cutting_dictionary
+        sage: fix_cutting_dictionary(p, g=2)
         sage: p
         {word: : word: 12}
     """

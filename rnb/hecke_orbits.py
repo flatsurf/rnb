@@ -220,9 +220,10 @@ from sage.rings.number_field.number_field import NumberField
 from sage.rings.polynomial.polynomial_ring import polygen
 from sage.rings.qqbar import AA
 from sage.symbolic.ring import SR
-from cos_minpoly import cos_minpoly
+from sage.misc.cachefunc import cached_function
 
-load('timings.py')
+from rnb.cos_minpoly import *
+from rnb.timings import *
 
 @cached_function
 def structure(g):
@@ -465,16 +466,16 @@ def long_diagonals(g, xmax=10, ymax=10, clip=True):
         x = basic_diagonals(g)
     m = xmatrix(g)
     l = m.nrows()
-    k, nc = 1r, len(x)
+    k, nc = 1, len(x)
     while k < nc:
-        if bounded(x[k-1r]) and bounded(x[k]):
-            xx = (m * M(x[k-1r:k+1r])).rows()
+        if bounded(x[k-1]) and bounded(x[k]):
+            xx = (m * M(x[k-1:k+1])).rows()
             if any(bounded(v) for v in xx):
                 x[k:k] = xx
                 nc += l
-            else: k += 1r
+            else: k += 1
         else:
-            k += 1r
+            k += 1
     if clip:
         x = list(filter(bounded, x))
     if xmax == ymax:
@@ -504,16 +505,16 @@ def low_diagonals(g=2, xmax=10, clip=True, start=None):
         x = basic_diagonals(g)
     else:
         x = start
-    k, nc = 1r, len(x)
+    k, nc = 1, len(x)
     while k < nc:
-        if bounded(x[k-1r]) and bounded(x[k]):
-            xx = (m * M(x[k-1r:k+1r])).rows()
+        if bounded(x[k-1]) and bounded(x[k]):
+            xx = (m * M(x[k-1:k+1])).rows()
             if any(bounded(v) for v in xx):
                 x[k:k] = xx
                 nc += l
-            else: k += 1r
+            else: k += 1
         else:
-            k += 1r
+            k += 1
     if clip:
         x = list(filter(bounded, x))
     d = defaultdict(list)
@@ -538,11 +539,11 @@ def unclipped_very_low_diagonals(g=2, xmax=10, start=None, verbose=False):
     l = m.nrows()
     if start is None:
         x = basic_diagonals(g)
-        k = len(x) - 1r
-        x[k:] = (m[:g] * M(x[k-1r:k+1r])).rows()
+        k = len(x) - 1
+        x[k:] = (m[:g] * M(x[k-1:k+1])).rows()
     else:
         x = start
-    k, nc = 1r, len(x)
+    k, nc = 1, len(x)
     if verbose:
         indent = ' |' * verbose
         old_percent = 0
@@ -561,15 +562,15 @@ def unclipped_very_low_diagonals(g=2, xmax=10, start=None, verbose=False):
                 print(f'[{new_iso}]{indent} {percent:3d}% {timing}')
                 old_percent = percent
                 old_time, old_iso = new_time, new_iso
-        if bounded(x[k-1r]) and bounded(x[k]):
-            xx = (m * M(x[k-1r:k+1r])).rows()
+        if bounded(x[k-1]) and bounded(x[k]):
+            xx = (m * M(x[k-1:k+1])).rows()
             if any(bounded(v) for v in xx):
                 x[k:k] = xx
                 nc += l
             else:
-                k += 1r
+                k += 1
         else:
-            k += 1r
+            k += 1
     return x
 
 
