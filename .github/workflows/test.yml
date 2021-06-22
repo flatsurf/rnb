@@ -22,6 +22,6 @@ jobs:
       - name: doctest
         shell: bash -l {0}
         run: |
-	  sage -tp rnb/gorbits.sage rnb/hecke_orbits.sage
+          sage -tp rnb/gorbits.sage rnb/hecke_orbits.sage
       - uses: flatsurf/actions/show-logs@main
         if: ${{ always() }}
