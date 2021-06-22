@@ -17,7 +17,7 @@ jobs:
       - name: install dependencies
         shell: bash -l {0}
         run: |
-          mamba install --yes --quiet python=${{ matrix.python }} sagelib
+          mamba install --yes --quiet python=${{ matrix.python }} sagelib=9.3 ipywidgets
           conda list
       - name: doctest
         shell: bash -l {0}
